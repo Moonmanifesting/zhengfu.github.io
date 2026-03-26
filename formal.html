@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zhengfu — Academic Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f4;
+      --ink: #1a1a18;
+      --muted: #6b6b63;
+      --accent: #3a5a40;
+      --border: #e2ddd5;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,248,244,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 58px;
+    }
+
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 18px;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* HERO */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 48px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-text h1 {
+      font-family: var(--serif);
+      font-size: clamp(44px, 6vw, 68px);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-text h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-text p {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+
+    .hero-photo {
+      display: flex;
+      justify-content: center;
+    }
+
+    .photo-frame {
+      width: 280px;
+      height: 340px;
+      background: var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .photo-placeholder {
+      font-family: var(--serif);
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 100px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 400;
+      margin-bottom: 56px;
+      line-height: 1.15;
+    }
+
+    /* RESEARCH */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .research-item {
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .research-item:hover { background: #fff; }
+
+    .research-item h3 {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .research-item p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .research-tag {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+    }
+
+    /* CV */
+    .cv-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+
+    .cv-column h3 {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cv-entry {
+      margin-bottom: 28px;
+    }
+
+    .cv-entry-year {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .cv-entry-title {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .cv-entry-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cv-download {
+      margin-top: 40px;
+    }
+
+    /* TEACHING */
+    .teaching-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .teaching-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: start;
+      gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .teaching-item:first-child { border-top: 1px solid var(--border); }
+
+    .teaching-term {
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+
+    .teaching-title {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .teaching-desc {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .teaching-level {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+      padding-top: 4px;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow 0.25s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 8px 32px rgba(26,26,24,0.08);
+    }
+
+    .project-thumb {
+      height: 160px;
+      background: linear-gradient(135deg, #e8e4dc, #d4cfc6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .project-body {
+      padding: 24px;
+    }
+
+    .project-body h3 {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .project-body p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .project-link {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .project-link:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--ink); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 11px; }
+
+      #home, section { padding: 80px 24px; }
+
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-photo { order: -1; }
+      .photo-frame { width: 200px; height: 240px; }
+
+      .cv-layout { grid-template-columns: 1fr; gap: 40px; }
+
+      .teaching-item { grid-template-columns: 1fr; gap: 8px; }
+      .teaching-term { color: var(--accent); }
+
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-name">Zhengfu</a>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div id="home">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1>Zhengfu<br><em>Your Name</em></h1>
+        <p>
+          PhD Candidate / Researcher at [Your University]. My work sits at the intersection of [your field], exploring how [brief description of your research interests].
+        </p>
+        <div class="hero-links">
+          <a href="#research" class="btn btn-primary">My Research</a>
+          <a href="#cv" class="btn btn-secondary">Curriculum Vitae</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="photo-frame">
+          <p class="photo-placeholder">Your photo here<br><span style="font-size:12px;opacity:0.6;">Replace with &lt;img&gt; tag</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <p class="section-label">Research</p>
+    <h2 class="section-title">Areas of inquiry</h2>
+    <div class="research-grid">
+      <div class="research-item">
+        <h3>Research Area One</h3>
+        <p>Describe your first major research interest or project here. What questions are you exploring? What methods do you use?</p>
+        <span class="research-tag">Working paper</span>
+      </div>
+      <div class="research-item">
+        <h3>Research Area Two</h3>
+        <p>Describe your second research strand here. Include any publications, under review papers, or ongoing work in this area.</p>
+        <span class="research-tag">Published 2024</span>
+      </div>
+      <div class="research-item">
+        <h3>Research Area Three</h3>
+        <p>A third thread of your research. This could be a collaborative project, a new direction, or an emerging interest.</p>
+        <span class="research-tag">In progress</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <p class="section-label">Curriculum Vitae</p>
+    <h2 class="section-title">Education &amp; experience</h2>
+    <div class="cv-layout">
+      <div class="cv-column">
+        <h3>Education</h3>
+        <div class="cv-entry">
+          <p class="cv-entry-year">2021 — Present</p>
+          <p class="cv-entry-title">PhD in [Your Field]</p>
+          <p class="cv-entry-sub">University Name, City</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-entry-year">2019 — 2021</p>
+          <p class="cv-entry-title">MA in [Your Field]</p>
+          <p class="cv-entry-sub">University Name, City</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-entry-year">2015 — 2019</p>
+          <p class="cv-entry-title">BA in [Your Field]</p>
+          <p class="cv-entry-sub">University Name, City</p>
+        </div>
+        <div class="cv-download">
+          <a href="cv.pdf" class="btn btn-secondary">Download full CV (PDF)</a>
+        </div>
+      </div>
+      <div class="cv-column">
+        <h3>Positions &amp; Fellowships</h3>
+        <div class="cv-entry">
+          <p class="cv-entry-year">2023 — Present</p>
+          <p class="cv-entry-title">Research Fellow</p>
+          <p class="cv-entry-sub">Institute / Organization Name</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-entry-year">2022</p>
+          <p class="cv-entry-title">Visiting Scholar</p>
+          <p class="cv-entry-sub">University Name, City</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-entry-year">2021 — 2022</p>
+          <p class="cv-entry-title">Teaching Assistant</p>
+          <p class="cv-entry-sub">Department of [Field], University Name</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching">
+    <p class="section-label">Teaching</p>
+    <h2 class="section-title">Courses &amp; seminars</h2>
+    <div class="teaching-list">
+      <div class="teaching-item">
+        <p class="teaching-term">Spring 2025</p>
+        <div>
+          <p class="teaching-title">Introduction to [Your Field]</p>
+          <p class="teaching-desc">An overview of key concepts, methods, and debates in [field]. For undergraduate students.</p>
+        </div>
+        <p class="teaching-level">Undergraduate</p>
+      </div>
+      <div class="teaching-item">
+        <p class="teaching-term">Fall 2024</p>
+        <div>
+          <p class="teaching-title">Seminar: [Topic Name]</p>
+          <p class="teaching-desc">Advanced seminar exploring [topic] through primary sources and current scholarship.</p>
+        </div>
+        <p class="teaching-level">Graduate</p>
+      </div>
+      <div class="teaching-item">
+        <p class="teaching-term">Spring 2024</p>
+        <div>
+          <p class="teaching-title">Research Methods in [Field]</p>
+          <p class="teaching-desc">Practical training in qualitative and quantitative methods for social science research.</p>
+        </div>
+        <p class="teaching-level">Graduate</p>
+      </div>
+      <div class="teaching-item">
+        <p class="teaching-term">Fall 2023</p>
+        <div>
+          <p class="teaching-title">[Course Name]</p>
+          <p class="teaching-desc">Description of this course and its main themes and objectives.</p>
+        </div>
+        <p class="teaching-level">Undergraduate</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Projects</p>
+    <h2 class="section-title">Selected work</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb">Project image or thumbnail</div>
+        <div class="project-body">
+          <h3>Project Title One</h3>
+          <p>Brief description of this project — what it is, what you did, what it produced or contributed.</p>
+          <a href="#" class="project-link">View project →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">Project image or thumbnail</div>
+        <div class="project-body">
+          <h3>Project Title Two</h3>
+          <p>Brief description of this project — collaborators, funding body, outcomes, or public-facing outputs.</p>
+          <a href="#" class="project-link">View project →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">Project image or thumbnail</div>
+        <div class="project-body">
+          <h3>Project Title Three</h3>
+          <p>Description of a third project, dataset, tool, public engagement activity, or collaborative endeavor.</p>
+          <a href="#" class="project-link">View project →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Zhengfu · Built with GitHub Pages</p>
+    <div class="footer-links">
+      <a href="mailto:your@email.edu">Email</a>
+      <a href="https://twitter.com/" target="_blank">Twitter / X</a>
+      <a href="https://scholar.google.com/" target="_blank">Google Scholar</a>
+    </div>
+  </footer>
+
+</body>
+</html>
